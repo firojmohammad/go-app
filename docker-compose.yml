@@ -3,4 +3,4 @@ services:
       go-app:
        build: .
        ports:
-         - '8081:8080'
+         - '8082:8080'
