@@ -33,13 +33,13 @@ jobs:
 
 Deployment
 
-on:
-  push:
-    branches:
-      - main 
-    runs-on: self-hosted
-    steps:
-    - uses: actions/checkout@v2
-    - name: Deploy-stage
+  on:
+    push:
+      branches:
+       - main 
+      runs-on: self-hosted
+      steps:
+      - uses: actions/checkout@v2
+      - name: Deploy-stage
       run: docker-compose up -d
        
