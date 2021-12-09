@@ -22,17 +22,12 @@ jobs:
        image: firoj0786/go-app
        context: .
        push: true
-       tags:
-          user/image:latest
+       tags: user/image:latest
        registry: docker.io
        username: ${{ secrets.DOCKER_USERNAME }}
        password: ${{ secrets.DOCKER_PASSWORD }}
        
        
-       
-       
- 
-
 deploy:
 
 on:
