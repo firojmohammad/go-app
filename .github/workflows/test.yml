@@ -2,9 +2,9 @@ name: Docker Image
 
 on:
   push:
-    branches: [ main,develop ]
+    branches: [ main ]
   pull_request:
-    branches: [ main,develop ]
+    branches: [ main ]
 
 jobs:
 
@@ -42,5 +42,5 @@ on:
     runs-on: self-hosted
     steps:
     - uses: actions/checkout@v2
-    - name: Deploy-stage
+    - name: Deploy-stage1
       run: docker-compose up -d
