@@ -1,4 +1,4 @@
-name: Docker Image app
+name: Docker Image app1
 
 on:
   push:
@@ -40,6 +40,6 @@ Deployment
       runs-on: self-hosted
       steps:
       - uses: actions/checkout@v2
-      - name: Deploy-stage
-      run: docker-compose up -d
+      - name: Deploy-stage 2
+        run: docker-compose up -d
        
