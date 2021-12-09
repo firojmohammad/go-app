@@ -8,25 +8,24 @@ on:
 
 jobs:
 
-   build:
+  build:
 
-    runs-on: self-hosted
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:hey
+   runs-on: self-hosted
+   steps:
+   - uses: actions/checkout@v2
+   - name: Build the Docker image
+     run: docker build . --file Dockerfile --tag my-image-name:hey
      
-    - name: Build and Push Docker Image
-      uses: mr-smithers-excellent/docker-build-push@v4
-      with:
-       image: firoj0786/go-app
-       context: .
-       push: true
-       tags:
-          user/image:latest
-       registry: docker.io
-       username: ${{ secrets.DOCKER_USERNAME }}
-       password: ${{ secrets.DOCKER_PASSWORD }}
+   - name: Build and Push Docker Image
+     uses: mr-smithers-excellent/docker-build-push@v4
+     with:
+      image: firoj0786/go-app
+      context: .
+      push: true
+      tags: user/image:latest
+      registry: docker.io
+      username: ${{ secrets.DOCKER_USERNAME }}
+      password: ${{ secrets.DOCKER_PASSWORD }}
        
 
 
