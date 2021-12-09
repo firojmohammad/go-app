@@ -33,7 +33,7 @@ jobs:
        
  
 
-Deployment:
+deploy:
 
 on:
   push:
