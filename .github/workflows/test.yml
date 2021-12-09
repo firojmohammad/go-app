@@ -28,11 +28,6 @@ jobs:
        
 deploy:
 
-on:
-  push:
-    branches:
-      - main 
-    runs-on: self-hosted
     steps:
     - uses: actions/checkout@v2
     - name: Deploy-stage1
