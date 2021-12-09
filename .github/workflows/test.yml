@@ -10,11 +10,12 @@ jobs:
 
   build:
 
+
    runs-on: self-hosted
    steps:
    - uses: actions/checkout@v2
    - name: Build the Docker image
-     run: docker build . --file Dockerfile --tag my-image-name:hey
+    run: docker build . --file Dockerfile --tag my-image-name:hey
      
    - name: Build and Push Docker Image
      uses: mr-smithers-excellent/docker-build-push@v4
@@ -40,5 +41,5 @@ Deployment
       steps:
       - uses: actions/checkout@v2
       - name: Deploy-stage 2
-        run: docker-compose up -d
+       run: docker-compose up -d
        
