@@ -1,34 +1,48 @@
-name: Docker Image 
+name: Docker Image of go app
+
 
 on:
   push:
+    branches: [ main ]
+  pull_request:
     branches: [ main ]
 
 jobs:
 
   build:
+      
 
     runs-on: self-hosted
     steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:hi
+    
+    - name: build_push_tag of develop
      
-    - name: Build and Push Docker Image
-      uses: mr-smithers-excellent/docker-build-push@v4
-      with:
-       image: firoj0786/go-app
-       context: .
-       push: true
-       tags: user/image:latest
-       registry: docker.io
-       username: ${{ secrets.DOCKER_USERNAME }}
-       password: ${{ secrets.DOCKER_PASSWORD }}
-       
-       
-deploy:
-
+      
+      env:      
+       PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+       USERNAME: ${{ secrets.DOCKER_USERNAME }}  
+      
+     
+      run: |
+            
+             docker login -u $USERNAME -p $PASSWORD
+             docker build -t firoj0786/app:${{ github.sha }} -f Dockerfile .  
+             docker push firoj0786/app:${{ github.sha }}
+         
+             
+  deploy:
+ 
+    runs-on: self-hosted
     steps:
-    - uses: actions/checkout@v2
-    - name: Deploy-stage1
-      run: docker-compose up -d
+    
+    - name: deploy app
+      
+      env:
+       PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+       USERNAME: ${{ secrets.DOCKER_USERNAME }}  
+      run: |
+      
+              docker login -u $USERNAME -p $PASSWORD
+              docker build -t firoj0786/app:${{ github.sha }} -f Dockerfile .   
+              docker push firoj0786/app:${{ github.sha }}
+              docker-compose  up -d 
