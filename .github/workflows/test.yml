@@ -15,7 +15,7 @@ jobs:
     runs-on: self-hosted
     steps:
     
-    - name: build_push_tag of develop
+    - name: build_push_tag of main
      
       
       env:      
@@ -45,4 +45,5 @@ jobs:
               docker login -u $USERNAME -p $PASSWORD
               docker build -t firoj0786/app:${{ github.sha }} -f Dockerfile .   
               docker push firoj0786/app:${{ github.sha }}
-              docker-compose  up -d 
+              docker-compose  up -d
+              
