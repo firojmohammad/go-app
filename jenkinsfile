@@ -1,31 +1,42 @@
 pipeline {
-    agent any
-
+    agent {
+        docker {
+            image 'go-app_go-app'
+            args '-p 800:8082'
+        }
+    }
+    environment {
+        CI = 'true'
+    }
     stages {
-        stage ('Compile Stage') {
-
+        stage('Build') {
             steps {
-                withMaven(maven : 'maven_3_5_0') {
-                    sh 'mvn clean compile'
-                }
+                sh 'go build'
             }
         }
-
-        stage ('Testing Stage') {
-
+        stage('Test') {
             steps {
-                withMaven(maven : 'maven_3_5_0') {
-                    sh 'mvn test'
-                }
+                sh './jenkins/scripts/test.sh'
             }
         }
-
-
-        stage ('Deployment Stage') {
+        stage('Deliver for develop') {
+            when {
+                branch 'develop'
+            }
             steps {
-                withMaven(maven : 'maven_3_5_0') {
-                    sh 'mvn deploy'
-                }
+                sh './jenkins/scripts/deliver-for-develop.sh'
+                input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                sh './jenkins/scripts/kill.sh'
+            }
+        }
+        stage('Deploy for main') {
+            when {
+                branch 'main'
+            }
+            steps {
+                sh './jenkins/scripts/deploy-for-deploy.sh'
+                input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                sh './jenkins/scripts/kill.sh'
             }
         }
     }
