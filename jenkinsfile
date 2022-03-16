@@ -1,42 +1,10 @@
 pipeline {
-    agent {
-        docker {
-            image 'go-app_go-app'
-            args '-p 800:8082'
-        }
-    }
-    environment {
-        CI = 'true'
-    }
+    agent { dockerfile true }
     stages {
-        stage('Build') {
-            steps {
-                sh 'go build'
-            }
-        }
         stage('Test') {
             steps {
-                sh './jenkins/scripts/test.sh'
-            }
-        }
-        stage('Deliver for develop') {
-            when {
-                branch 'develop'
-            }
-            steps {
-                sh './jenkins/scripts/deliver-for-develop.sh'
-                input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                sh './jenkins/scripts/kill.sh'
-            }
-        }
-        stage('Deploy for main') {
-            when {
-                branch 'main'
-            }
-            steps {
-                sh './jenkins/scripts/deploy-for-deploy.sh'
-                input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                sh './jenkins/scripts/kill.sh'
+                sh 'node --version'
+                sh 'svn --version'
             }
         }
     }
