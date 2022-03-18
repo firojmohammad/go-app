@@ -1,10 +1,11 @@
 pipeline {
-    agent { Dockerfile true }
+    agent any
     stages {
-        stage('Test') {
+        stage('build') {
             steps {
-                sh 'node --version'
-                sh 'svn --version'
+                sh '''
+                kubectl get po
+              '''
             }
         }
     }
